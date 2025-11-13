@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { fuzzySearch, SearchResult } from '@/lib/fuzzySearch'
+import { fuzzySearch } from '@/lib/fuzzySearch'
 import { filterByDistance } from '@/lib/geolocation'
 import LocationFilter, { LocationFilterState } from './LocationFilter'
 import { useDynamicScraping } from '@/hooks/useDynamicScraping'
@@ -506,7 +506,7 @@ export default function SmartSearchBar({
                 <path d="m21 21-4.35-4.35" />
               </svg>
               <p>Aucun résultat trouvé</p>
-              <span>Essayez avec d'autres mots-clés</span>
+              <span>Essayez avec d&apos;autres mots-clés</span>
             </div>
           </motion.div>
         )}

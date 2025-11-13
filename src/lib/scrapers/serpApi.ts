@@ -1,20 +1,5 @@
 import { OverpassActivity } from './overpass'
 
-interface SerpApiResult {
-  position: number
-  title: string
-  address?: string
-  rating?: number
-  reviews?: number
-  type?: string
-  phone?: string
-  website?: string
-  gps_coordinates?: {
-    latitude: number
-    longitude: number
-  }
-}
-
 interface ScrapeOptions {
   latitude?: number
   longitude?: number

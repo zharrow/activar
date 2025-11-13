@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { generateMetadata as genMeta, generateSlug, baseUrl } from '@/lib/seo'
+import { generateMetadata as genMeta, baseUrl } from '@/lib/seo'
 import ActivityCardModern from '@/components/ActivityCardModern'
 import Breadcrumb from '@/components/Breadcrumb'
 

@@ -19,7 +19,7 @@ export default function NotFound() {
           <div className="not-found__icon">404</div>
           <h1 className="not-found__title">Page non trouvée</h1>
           <p className="not-found__text">
-            Oups ! La page que vous recherchez n'existe pas ou a été déplacée.
+            Oups ! La page que vous recherchez n&apos;existe pas ou a été déplacée.
           </p>
 
           <div className="not-found__suggestions">
@@ -29,7 +29,7 @@ export default function NotFound() {
                 <div className="suggestion-card__icon">🔍</div>
                 <h3 className="suggestion-card__title">Rechercher des activités</h3>
                 <p className="suggestion-card__text">
-                  Explorez notre catalogue complet d'activités à Toulouse
+                  Explorez notre catalogue complet d&apos;activités à Toulouse
                 </p>
               </Link>
 
@@ -61,7 +61,7 @@ export default function NotFound() {
 
           <div className="not-found__actions">
             <Link href="/" className="btn btn--primary">
-              Retour à l'accueil
+              Retour à l&apos;accueil
             </Link>
             <Link href="/faq" className="btn btn--secondary">
               Questions fréquentes

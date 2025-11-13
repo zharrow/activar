@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import ActivitiesListModern from '@/components/ActivitiesListModern'
 

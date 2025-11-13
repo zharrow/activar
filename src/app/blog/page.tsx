@@ -51,7 +51,7 @@ export default function BlogPage() {
                   <div className="blog-card__footer">
                     <span className="blog-card__author">Par {post.author}</span>
                     <Link href={`/blog/${post.slug}`} className="blog-card__link">
-                      Lire l'article
+                      Lire l&apos;article
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                       </svg>

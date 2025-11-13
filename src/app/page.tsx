@@ -19,13 +19,13 @@ export default function HomePage() {
             </h1>
             <p className="home-hero__subtitle">
               Que vous cherchiez un club de sport, une association intellectuelle,
-              ou des personnes partageant vos passions, nous avons ce qu'il vous faut.
+              ou des personnes partageant vos passions, nous avons ce qu&apos;il vous faut.
             </p>
 
             <div className="home-hero__cta-group">
               <Link href="/activites" className="cta-card cta-card--primary">
                 <div className="cta-card__icon">🔍</div>
-                <h2 className="cta-card__title">Recherche d'activités</h2>
+                <h2 className="cta-card__title">Recherche d&apos;activités</h2>
                 <p className="cta-card__description">
                   Explorez notre catalogue de clubs sportifs et intellectuels à Toulouse.
                   Carte interactive, filtres avancés, et informations détaillées.
@@ -41,7 +41,7 @@ export default function HomePage() {
               <div className="cta-card cta-card--secondary cta-card--disabled">
                 <div className="cta-card__badge">Bientôt disponible</div>
                 <div className="cta-card__icon">💬</div>
-                <h2 className="cta-card__title">Rencontres autour d'activités</h2>
+                <h2 className="cta-card__title">Rencontres autour d&apos;activités</h2>
                 <p className="cta-card__description">
                   Trouvez des partenaires pour vos activités favorites.
                   Connectez-vous avec des passionnés près de chez vous.
@@ -102,7 +102,7 @@ export default function HomePage() {
               <div className="feature-card__icon">🆓</div>
               <h3 className="feature-card__title">Gratuit</h3>
               <p className="feature-card__description">
-                Pas d'abonnement, pas de frais cachés. Toutes nos fonctionnalités sont gratuites.
+                Pas d&apos;abonnement, pas de frais cachés. Toutes nos fonctionnalités sont gratuites.
               </p>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function HomePage() {
           <div className="home-cta__content">
             <h2 className="home-cta__title">Prêt à découvrir votre prochaine passion ?</h2>
             <p className="home-cta__subtitle">
-              Des centaines d'activités vous attendent à Toulouse
+              Des centaines d&apos;activités vous attendent à Toulouse
             </p>
             <Link href="/activites" className="btn btn--large btn--primary">
               Commencer maintenant

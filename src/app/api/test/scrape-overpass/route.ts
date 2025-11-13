@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { scrapeOverpassAPI } from '@/lib/scrapers/overpass'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic'
+
 // Endpoint de test pour scraper uniquement Overpass API
 export async function GET() {
   const startTime = Date.now()

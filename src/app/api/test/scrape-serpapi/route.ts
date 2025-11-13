@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { scrapeSerpApi } from '@/lib/scrapers/serpApi'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic'
+
 // Endpoint de test pour scraper uniquement SerpApi
 export async function GET() {
   const startTime = Date.now()

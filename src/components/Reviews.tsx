@@ -16,7 +16,7 @@ interface ReviewsProps {
   activityName: string
 }
 
-export default function Reviews({ reviews, activityName }: ReviewsProps) {
+export default function Reviews({ reviews }: ReviewsProps) {
   const [showAll, setShowAll] = useState(false)
 
   if (reviews.length === 0) {

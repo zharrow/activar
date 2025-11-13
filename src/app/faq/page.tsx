@@ -88,9 +88,9 @@ export default function FAQPage() {
             <FAQ items={faqItems} />
 
             <div className="faq-cta">
-              <h2 className="faq-cta__title">Vous n'avez pas trouvé de réponse ?</h2>
+              <h2 className="faq-cta__title">Vous n&apos;avez pas trouvé de réponse ?</h2>
               <p className="faq-cta__text">
-                Explorez notre catalogue d'activités ou consultez notre blog pour plus d'informations
+                Explorez notre catalogue d&apos;activités ou consultez notre blog pour plus d&apos;informations
               </p>
               <div className="faq-cta__buttons">
                 <Link href="/activites" className="btn btn--primary">

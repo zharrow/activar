@@ -84,7 +84,7 @@ export default function ActivitiesMap({
         mapRef.current = null
       }
     }
-  }, [center, zoom])
+  }, [center, zoom, scrollWheelZoom, dragging, touchZoom, doubleClickZoom, boxZoom, keyboard])
 
   useEffect(() => {
     if (!mapRef.current) return

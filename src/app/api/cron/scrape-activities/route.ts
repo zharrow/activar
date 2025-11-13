@@ -4,6 +4,9 @@ import { scrapeOverpassAPI } from '@/lib/scrapers/overpass'
 import { scrapeGooglePlaces } from '@/lib/scrapers/googlePlaces'
 import { scrapeSerpApi } from '@/lib/scrapers/serpApi'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
   // Verify Vercel Cron secret
   const authHeader = request.headers.get('authorization')
