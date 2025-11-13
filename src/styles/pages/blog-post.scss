@@ -1,0 +1,252 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.blog-post {
+  min-height: 100vh;
+  background: #f9fafb;
+  padding: 3rem 0 6rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 0 4rem;
+  }
+
+  &__article {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+      padding: 2rem 1.5rem;
+      border-radius: 0;
+    }
+  }
+
+  &__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+
+    a {
+      color: #667eea;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #764ba2;
+      }
+    }
+
+    span:last-child {
+      color: #1f2937;
+      font-weight: 500;
+    }
+  }
+
+  &__header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  &__category {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: #6b7280;
+    flex-wrap: wrap;
+  }
+
+  &__author {
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  &__separator {
+    color: #d1d5db;
+  }
+
+  &__content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #374151;
+
+    h1, h2, h3 {
+      color: #1f2937;
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 0.5rem;
+
+      @media (max-width: 768px) {
+        font-size: 1.75rem;
+      }
+    }
+
+    h2 {
+      font-size: 1.875rem;
+      color: #667eea;
+
+      @media (max-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    h3 {
+      font-size: 1.5rem;
+
+      @media (max-width: 768px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 2rem;
+
+      li {
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    strong {
+      color: #1f2937;
+      font-weight: 700;
+    }
+
+    a {
+      color: #667eea;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #764ba2;
+      }
+    }
+
+    blockquote {
+      border-left: 4px solid #667eea;
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+      font-style: italic;
+      color: #6b7280;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+
+    pre {
+      background: #1f2937;
+      color: #f3f4f6;
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 2rem 0;
+
+      code {
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e5e7eb;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  &--narrow {
+    max-width: 900px;
+  }
+}
+
+.btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+
+  &--primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+  }
+
+  &--secondary {
+    background: #f3f4f6;
+    color: #1f2937;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+}

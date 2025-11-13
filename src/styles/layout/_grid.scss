@@ -1,0 +1,45 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat($grid-columns, 1fr);
+  gap: $grid-gutter;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+
+  @include respond-to('md') {
+    padding: 0 $spacing-2xl;
+  }
+}
+
+.grid-content {
+  grid-column: 1 / -1;
+
+  @include respond-to('md') {
+    grid-column: 2 / 12;
+  }
+
+  @include respond-to('lg') {
+    grid-column: 2 / 12;
+  }
+}
+
+// Grid span utilities
+@for $i from 1 through $grid-columns {
+  .col-span-#{$i} {
+    grid-column: span $i;
+  }
+}
+
+// Grid start utilities
+@for $i from 1 through $grid-columns {
+  .col-start-#{$i} {
+    grid-column-start: $i;
+  }
+}
+
+// Grid end utilities
+@for $i from 1 through $grid-columns + 1 {
+  .col-end-#{$i} {
+    grid-column-end: $i;
+  }
+}

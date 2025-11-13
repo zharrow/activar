@@ -1,0 +1,61 @@
+.hero {
+  background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+  color: $color-white;
+  padding: $spacing-3xl $spacing-md;
+  text-align: center;
+  
+  @include respond-to('md') {
+    padding: 5rem $spacing-md;
+  }
+  
+  &__title {
+    color: $color-white;
+    font-size: $font-size-4xl;
+    margin-bottom: $spacing-lg;
+    
+    @include respond-to('md') {
+      font-size: 3.5rem;
+    }
+  }
+  
+  &__subtitle {
+    font-size: $font-size-xl;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto $spacing-2xl;
+  }
+
+  &__stats {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-2xl;
+    flex-wrap: wrap;
+    margin-top: $spacing-2xl;
+  }
+
+  &__stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-lg $spacing-xl;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: $border-radius-lg;
+    backdrop-filter: blur(10px);
+    transition: transform $transition-base;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__stat-icon {
+    font-size: 2.5rem;
+  }
+
+  &__stat-label {
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+  }
+}

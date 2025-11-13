@@ -1,0 +1,161 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.header {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    position: relative;
+  }
+
+  &__logo {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #1f2937;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    &--open {
+      span:nth-child(1) {
+        transform: rotate(45deg) translateY(8px);
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+      }
+
+      span:nth-child(3) {
+        transform: rotate(-45deg) translateY(-8px);
+      }
+    }
+  }
+
+  &__menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 768px) {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 300px;
+      height: 100vh;
+      background: white;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      gap: 0;
+
+      &--open {
+        right: 0;
+      }
+    }
+  }
+
+  &__menu-item {
+    @media (max-width: 768px) {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1f2937;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+      position: relative;
+
+      @media (max-width: 768px) {
+        display: block;
+        padding: 1rem 0;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        transition: width 0.3s ease;
+
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+
+      &:hover {
+        color: #667eea;
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Overlay when mobile menu is open
+@media (max-width: 768px) {
+  .header__menu--open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}

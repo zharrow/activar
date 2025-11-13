@@ -1,0 +1,62 @@
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.activity-card-skeleton {
+  background: $color-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $shadow-md;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title,
+  &__category,
+  &__line {
+    background: linear-gradient(
+      90deg,
+      $color-bg-light 0px,
+      lighten($color-bg-light, 2%) 40px,
+      $color-bg-light 80px
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: $border-radius-sm;
+  }
+
+  &__title {
+    height: 24px;
+    width: 60%;
+  }
+
+  &__category {
+    height: 20px;
+    width: 80px;
+    border-radius: $border-radius-full;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__line {
+    height: 16px;
+    width: 100%;
+
+    &--short {
+      width: 70%;
+    }
+  }
+}

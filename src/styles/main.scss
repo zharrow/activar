@@ -1,0 +1,542 @@
+// Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+// Base
+@import 'base/reset';
+@import 'base/typography';
+
+// Layout
+@import 'layout/container';
+@import 'layout/grid';
+
+// Components
+@import 'components/hero';
+@import 'components/card';
+@import 'components/card-modern';
+@import 'components/map-hero';
+@import 'components/button';
+@import 'components/activity-detail';
+@import 'components/map';
+@import 'components/filter';
+@import 'components/skeleton';
+@import 'components/location-filter';
+
+// CSS Variables for dynamic colors
+:root {
+  --color-primary: #{$color-primary};
+  --color-primary-rgb: 37, 99, 235; // RGB values for rgba usage
+  --color-primary-light: rgba(37, 99, 235, 0.08);
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
+  --color-white: #{$color-white};
+  --color-background: #{$color-bg-light};
+  --color-grey-light: #{$color-border};
+  --color-text: #{$color-text};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-tertiary: #{$color-text-secondary};
+}
+
+// Pages styles
+.activities {
+  padding: $spacing-3xl 0;
+  background: $color-bg-light;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+  }
+}
+
+.activities-stats {
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+
+  p {
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// Smooth scroll
+html {
+  scroll-behavior: smooth;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-lg;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-xl;
+  }
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-error {
+  color: $color-error;
+}
+
+// Smart Search Bar Styles
+.smart-search {
+  width: 100%;
+  margin-bottom: $spacing-2xl;
+
+  &__container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    background: $color-white;
+    border: 2px solid $color-border;
+    border-radius: $border-radius-full;
+    transition: all $transition-base;
+    box-shadow: $shadow-sm;
+
+    &:hover {
+      border-color: rgba($color-primary, 0.3);
+      box-shadow: $shadow-md;
+    }
+
+    &--focused {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 4px rgba($color-primary, 0.1), $shadow-md;
+    }
+  }
+
+  &__icon {
+    color: $color-text-secondary;
+    flex-shrink: 0;
+    transition: color $transition-base;
+
+    .smart-search__input-wrapper--focused & {
+      color: $color-primary;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: $font-size-lg;
+    font-weight: 500;
+    color: $color-text;
+    background: transparent;
+
+    &::placeholder {
+      color: $color-text-secondary;
+      font-weight: 400;
+    }
+  }
+
+  &__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba($color-text-secondary, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+
+    svg {
+      color: $color-text-secondary;
+    }
+
+    &:hover {
+      background: rgba($color-error, 0.1);
+
+      svg {
+        color: $color-error;
+      }
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + $spacing-md);
+    left: 0;
+    right: 0;
+    background: $color-white;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 100;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  &__results {
+    padding: $spacing-sm 0;
+  }
+
+  &__results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__results-hint {
+    font-size: $font-size-xs;
+    font-weight: 400;
+    color: rgba($color-text-secondary, 0.6);
+    text-transform: none;
+    letter-spacing: normal;
+
+    @media (max-width: $breakpoint-md) {
+      display: none;
+    }
+  }
+
+  &__suggestion {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    cursor: pointer;
+    transition: all $transition-fast;
+    border-left: 3px solid transparent;
+
+    &:hover,
+    &--selected {
+      background: $color-bg-light;
+      border-left-color: $color-primary;
+
+      .smart-search__suggestion-arrow {
+        transform: translateX(4px);
+        opacity: 1;
+      }
+    }
+  }
+
+  &__suggestion-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: $color-bg-light;
+    border-radius: $border-radius-md;
+  }
+
+  &__suggestion-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__suggestion-title {
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: $spacing-xs;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__suggestion-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+
+  &__suggestion-category {
+    font-weight: 600;
+    padding: 2px $spacing-sm;
+    background: rgba($color-primary, 0.1);
+    border-radius: $border-radius-sm;
+    white-space: nowrap;
+  }
+
+  &__suggestion-address {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__suggestion-arrow {
+    color: $color-primary;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(0);
+    transition: all $transition-base;
+  }
+
+  &__no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-3xl $spacing-xl;
+    text-align: center;
+
+    svg {
+      color: $color-text-secondary;
+      opacity: 0.3;
+      margin-bottom: $spacing-lg;
+    }
+
+    p {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      color: $color-text;
+      margin: 0 0 $spacing-sm 0;
+    }
+
+    span {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+    }
+  }
+
+  &__hint {
+    padding: $spacing-lg $spacing-xl;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    text-align: center;
+    border-top: 1px solid $color-border;
+  }
+
+  // Scraping notification banners
+  &__scraping-banner,
+  &__success-banner,
+  &__error-banner {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg $spacing-xl;
+    margin-bottom: $spacing-lg;
+    border-radius: $border-radius-lg;
+    font-size: $font-size-sm;
+
+    strong {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-size: $font-size-base;
+    }
+
+    p {
+      margin: 0;
+      color: inherit;
+      opacity: 0.9;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__scraping-banner {
+    background: rgba($color-primary, 0.1);
+    border: 1px solid rgba($color-primary, 0.2);
+    color: $color-primary;
+  }
+
+  &__success-banner {
+    background: rgba($color-success, 0.1);
+    border: 1px solid rgba($color-success, 0.2);
+    color: darken($color-success, 10%);
+  }
+
+  &__error-banner {
+    background: rgba($color-error, 0.1);
+    border: 1px solid rgba($color-error, 0.2);
+    color: darken($color-error, 10%);
+  }
+
+  &__scraping-content {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    flex: 1;
+  }
+
+  &__scraping-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba($color-primary, 0.2);
+    border-top-color: $color-primary;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  &__banner-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all $transition-fast;
+    color: inherit;
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &__scrape-button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    width: 100%;
+    padding: $spacing-lg $spacing-xl;
+    margin-bottom: $spacing-lg;
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: $color-white;
+    background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+    border: none;
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    transition: all $transition-base;
+    box-shadow: $shadow-md;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    span {
+      flex: 1;
+      text-align: left;
+
+      strong {
+        font-weight: 700;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba($color-primary, 0.3);
+      background: linear-gradient(135deg, darken($color-primary, 5%) 0%, darken($color-primary, 15%) 100%);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+  }
+}
+
+mark {
+  background: rgba($color-accent, 0.2);
+  color: $color-text;
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+// Main Split Layout - Activities Left (8 col) + Map Right (4 col)
+.main-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; // 8 columns : 4 columns ratio
+  width: 100%;
+  min-height: 100vh;
+  gap: 0;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+
+  &__content {
+    padding: $spacing-3xl;
+    padding-left: $spacing-4xl; // Left margin as requested
+    overflow-y: auto;
+    background: $color-bg-light;
+
+    @media (max-width: $breakpoint-lg) {
+      padding: $spacing-2xl $spacing-lg;
+      padding-left: $spacing-lg;
+    }
+
+    // Remove centered grid container from activities list
+    .grid-container {
+      display: block;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .grid-content {
+      grid-column: auto;
+      display: block;
+    }
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    // background: $color-bg-dark;
+
+    @media (max-width: $breakpoint-lg) {
+      position: relative;
+      height: 500px;
+    }
+  }
+}
+
+.map-sidebar {
+  width: 100%;
+  height: 100%;
+
+  // Override any pointer-events restrictions from map-hero
+  .leaflet-container,
+  .leaflet-pane,
+  .leaflet-tile-pane {
+    pointer-events: auto !important;
+  }
+}
+
+// Activities List Modern - Remove centering
+.activities-list-modern {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  width: 100%;
+}

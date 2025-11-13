@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Activity {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  category    String   @db.VarChar(100)
+  subcategory String?  @db.VarChar(100)
+  address     String   @db.Text
+  postalCode  String?  @map("postal_code") @db.VarChar(10)
+  city        String   @default("Toulouse") @db.VarChar(100)
+  phone       String?  @db.VarChar(20)
+  email       String?  @db.VarChar(255)
+  website     String?  @db.VarChar(255)
+  latitude    Float?   @db.DoublePrecision
+  longitude   Float?   @db.DoublePrecision
+  schedule    Json?    @db.JsonB
+
+  // Enhanced content for SEO
+  description String?  @db.Text
+  openingHours Json?  @map("opening_hours") @db.JsonB
+  neighborhood String? @db.VarChar(100)
+
+  // Relations
+  reviews     Review[]
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@index([subcategory])
+  @@index([latitude, longitude])
+  @@index([neighborhood])
+  @@map("activities")
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  activityId  Int      @map("activity_id")
+  activity    Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  authorName  String   @map("author_name") @db.VarChar(100)
+  rating      Int      // 1-5 stars
+  comment     String   @db.Text
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([activityId])
+  @@index([rating])
+  @@map("reviews")
+}
