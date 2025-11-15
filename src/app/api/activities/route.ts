@@ -4,6 +4,8 @@ import { z } from 'zod'
 
 // Force dynamic rendering for this route
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+export const revalidate = 0
 
 const querySchema = z.object({
   category: z.string().nullish(),

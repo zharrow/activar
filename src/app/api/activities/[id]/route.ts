@@ -3,13 +3,16 @@ import { prisma } from '@/lib/prisma'
 
 // Force dynamic rendering for this route
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+export const revalidate = 0
 
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id)
+    const resolvedParams = await params
+    const id = parseInt(resolvedParams.id)
 
     if (isNaN(id)) {
       return NextResponse.json(

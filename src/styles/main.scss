@@ -13,7 +13,6 @@
 // Components
 @import 'components/hero';
 @import 'components/card';
-@import 'components/card-modern';
 @import 'components/map-hero';
 @import 'components/button';
 @import 'components/activity-detail';
@@ -21,6 +20,11 @@
 @import 'components/filter';
 @import 'components/skeleton';
 @import 'components/location-filter';
+@import 'components/activities-list-modern';
+@import 'components/shadcn-overrides';
+
+// Pages
+@import 'pages/activity-detail';
 
 // CSS Variables for dynamic colors
 :root {

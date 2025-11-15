@@ -2,7 +2,9 @@ import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { generateMetadata as genMeta, generateSlug, baseUrl } from '@/lib/seo'
-import ActivityCardModern from '@/components/ActivityCardModern'
+import ActivityCardShadcn from '@/components/ActivityCardShadcn'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
 
 // Force dynamic rendering to avoid DB access at build time
 export const dynamic = 'force-dynamic'
@@ -98,10 +100,16 @@ export default async function SportPage() {
                   href={`#${generateSlug(subcat)}`}
                   className="category-nav__item"
                 >
-                  {subcat}
-                  <span className="category-nav__count">
-                    {groupedActivities[subcat].length}
-                  </span>
+                  <Card className="category-nav-card">
+                    <CardContent className="pt-6">
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold">{subcat}</span>
+                        <Badge variant="secondary">
+                          {groupedActivities[subcat].length}
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </Link>
               ))}
             </div>
@@ -112,7 +120,7 @@ export default async function SportPage() {
               <h2 className="activities-section__title">{subcat}</h2>
               <div className="activities-grid">
                 {groupedActivities[subcat].map((activity, index) => (
-                  <ActivityCardModern
+                  <ActivityCardShadcn
                     key={activity.id}
                     activity={activity as Activity}
                     index={index}

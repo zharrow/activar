@@ -4,6 +4,8 @@ import { scrapeSerpApi } from '@/lib/scrapers/serpApi'
 
 // Force dynamic rendering for this route
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+export const revalidate = 0
 
 // Endpoint de test pour scraper uniquement SerpApi
 export async function GET() {

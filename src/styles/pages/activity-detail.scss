@@ -1,0 +1,184 @@
+// Activity Detail Page Styles
+
+.activity-detail-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 400px);
+}
+
+// Hero Section
+.activity-hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  padding: 2rem 0 3rem;
+  margin-bottom: 2rem;
+
+  @include respond-to('md') {
+    padding: 3rem 0 4rem;
+    margin-bottom: 3rem;
+  }
+
+  &__content {
+    margin-top: 1rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    @include respond-to('md') {
+      font-size: 3rem;
+    }
+
+    @include respond-to('lg') {
+      font-size: 3.5rem;
+    }
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+    font-size: 1.125rem;
+    opacity: 0.95;
+    font-weight: 500;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+}
+
+// Main Grid Layout
+.activity-detail-container {
+  padding-bottom: 4rem;
+}
+
+.activity-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @include respond-to('lg') {
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+  }
+}
+
+.activity-detail-main {
+  // Main content column
+}
+
+.activity-detail-sidebar {
+  // Sidebar column
+}
+
+// Info Item Modern Style
+.info-item-modern {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border-radius: 12px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__value {
+    font-size: 1rem;
+    color: hsl(var(--foreground));
+    margin: 0;
+    word-wrap: break-word;
+  }
+
+  &__link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--color-secondary);
+    }
+  }
+}
+
+// CTA Card
+.activity-cta-card {
+  border: 2px solid hsl(var(--border));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Info Badge
+.info-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid hsl(var(--border));
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    font-weight: 500;
+  }
+}
+
+// Location Info
+.location-info {
+  .map-placeholder {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    border: 2px dashed hsl(var(--border));
+    margin-top: 1rem;
+  }
+}
+
+// Responsive adjustments
+@include respond-to('md') {
+  .activity-detail-page {
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 500px);
+  }
+}

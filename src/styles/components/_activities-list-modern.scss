@@ -1,0 +1,22 @@
+.activities-list-modern {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  width: 100%;
+}
+
+.filters-container {
+  display: flex;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-2xl;
+  flex-wrap: wrap;
+}
+
+.no-results {
+  padding: $spacing-4xl 0;
+
+  &__text {
+    font-size: $font-size-lg;
+    color: $color-text-secondary;
+  }
+}

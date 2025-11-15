@@ -5,6 +5,18 @@ const nextConfig = {
     includePaths: ['./src/styles'],
   },
 
+  // Turbopack configuration (Next.js 16+ default bundler)
+  // Empty config to acknowledge Turbopack usage and silence migration warnings
+  turbopack: {},
+
+  // Disable source map warnings in development (webpack fallback)
+  ...(process.env.NODE_ENV === 'development' && {
+    webpack: (config) => {
+      config.devtool = false
+      return config
+    },
+  }),
+
   // SEO and Performance optimizations
   compress: true,
   poweredByHeader: false,
@@ -41,7 +53,7 @@ const nextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
+            value: 'camera=(), microphone=(), geolocation=(self)'
           }
         ],
       },

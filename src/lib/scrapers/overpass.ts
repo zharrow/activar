@@ -12,16 +12,22 @@ export interface OverpassActivity {
   longitude: number
 }
 
-export async function scrapeOverpassAPI(): Promise<OverpassActivity[]> {
+export async function scrapeOverpassAPI(
+  latitude: number = 43.6047,
+  longitude: number = 1.4442,
+  cityName: string = 'Toulouse'
+): Promise<OverpassActivity[]> {
+  // Search radius: 20km around city center
+  const radiusKm = 20000 // in meters
+
   const query = `
     [out:json][timeout:25];
-    area["name"="Toulouse"]["admin_level"="8"]->.searchArea;
     (
-      node["sport"](area.searchArea);
-      way["sport"](area.searchArea);
-      node["leisure"~"sports_centre|fitness_centre|fitness_station"](area.searchArea);
-      way["leisure"~"sports_centre|fitness_centre"](area.searchArea);
-      node["club"~"sport"](area.searchArea);
+      node["sport"](around:${radiusKm},${latitude},${longitude});
+      way["sport"](around:${radiusKm},${latitude},${longitude});
+      node["leisure"~"sports_centre|fitness_centre|fitness_station"](around:${radiusKm},${latitude},${longitude});
+      way["leisure"~"sports_centre|fitness_centre"](around:${radiusKm},${latitude},${longitude});
+      node["club"~"sport"](around:${radiusKm},${latitude},${longitude});
     );
     out center;
     >;
@@ -63,7 +69,7 @@ export async function scrapeOverpassAPI(): Promise<OverpassActivity[]> {
           ? `${tags['addr:housenumber'] || ''} ${tags['addr:street']}`.trim()
           : 'Adresse non spécifiée',
         postalCode: tags['addr:postcode'],
-        city: tags['addr:city'] || 'Toulouse',
+        city: tags['addr:city'] || cityName,
         phone: tags.phone,
         email: tags.email,
         website: tags.website || tags['contact:website'],
@@ -74,10 +80,10 @@ export async function scrapeOverpassAPI(): Promise<OverpassActivity[]> {
       activities.push(activity)
     })
 
-    console.log(`[Overpass] Scraped ${activities.length} activities`)
+    console.log(`[Overpass] Scraped ${activities.length} activities from ${cityName}`)
     return activities
   } catch (error) {
-    console.error('[Overpass] Scraping error:', error)
+    console.error(`[Overpass] Scraping error for ${cityName}:`, error)
     return []
   }
 }

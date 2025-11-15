@@ -3,10 +3,20 @@ import { prisma } from '@/lib/prisma'
 import { scrapeOverpassAPI } from '@/lib/scrapers/overpass'
 import { scrapeGooglePlaces } from '@/lib/scrapers/googlePlaces'
 import { scrapeSerpApi } from '@/lib/scrapers/serpApi'
+import { getTopCities } from '@/data/cities'
 
 // Force dynamic rendering for this route
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+export const revalidate = 0
 
+/**
+ * Multi-city scraping strategy:
+ * - Scrapes 2-3 cities per day (rotation)
+ * - Prioritizes Top 10 French cities
+ * - Cycles through all cities over time
+ * - Respects API quotas (Google Places: 40,000/month = ~1,300/day)
+ */
 export async function GET(request: Request) {
   // Verify Vercel Cron secret
   const authHeader = request.headers.get('authorization')
@@ -19,18 +29,45 @@ export async function GET(request: Request) {
   const startTime = Date.now()
 
   try {
-    console.log('[Scraper] Starting scraping job...')
+    console.log('[Scraper] Starting multi-city scraping job...')
 
-    // Scrape from multiple sources in parallel
-    // Try SerpApi first, fallback to Google Places if not configured
-    const [overpassData, serpApiData, googleData] = await Promise.all([
-      scrapeOverpassAPI(),
-      scrapeSerpApi(),
-      scrapeGooglePlaces(),
-    ])
+    // Get priority cities (Top 10)
+    const cities = getTopCities(10)
+
+    // Determine which cities to scrape today (rotation based on day of month)
+    const today = new Date()
+    const dayOfMonth = today.getDate()
+    const citiesToScrape = getCitiesToScrapeToday(cities, dayOfMonth)
+
+    console.log(`[Scraper] Scraping cities today:`, citiesToScrape.map(c => c.name).join(', '))
+
+    // Scrape each city
+    const allActivities = []
+    const cityResults: Record<string, number> = {}
+
+    for (const city of citiesToScrape) {
+      console.log(`[Scraper] Scraping ${city.name}...`)
+
+      // Scrape from multiple sources for this city
+      const [overpassData, serpApiData, googleData] = await Promise.all([
+        scrapeOverpassAPI(city.latitude, city.longitude, city.name),
+        scrapeSerpApi({
+          latitude: city.latitude,
+          longitude: city.longitude,
+          cityName: city.name,
+          radiusKm: 20
+        }),
+        scrapeGooglePlaces(city.latitude, city.longitude, city.name),
+      ])
+
+      const cityActivities = [...overpassData, ...serpApiData, ...googleData]
+      allActivities.push(...cityActivities)
+      cityResults[city.name] = cityActivities.length
+
+      console.log(`[Scraper] Found ${cityActivities.length} activities in ${city.name}`)
+    }
 
     // Merge and deduplicate data from all sources
-    const allActivities = [...overpassData, ...serpApiData, ...googleData]
     const uniqueActivities = deduplicateActivities(allActivities)
 
     console.log(`[Scraper] Found ${uniqueActivities.length} unique activities`)
@@ -89,11 +126,8 @@ export async function GET(request: Request) {
     return NextResponse.json({
       success: true,
       count: upsertedCount,
-      sources: {
-        overpass: overpassData.length,
-        serpApi: serpApiData.length,
-        googlePlaces: googleData.length,
-      },
+      cities: citiesToScrape.map(c => c.name),
+      cityResults,
       duration: `${duration}ms`,
       timestamp: new Date().toISOString(),
     })
@@ -108,6 +142,30 @@ export async function GET(request: Request) {
       { status: 500 }
     )
   }
+}
+
+/**
+ * Determines which cities to scrape today based on rotation
+ * Strategy: Scrape 2-3 cities per day, cycling through all cities
+ */
+function getCitiesToScrapeToday(cities: any[], dayOfMonth: number) {
+  const CITIES_PER_DAY = 2 // Scrape 2 cities per day
+  const totalCities = cities.length
+
+  // Calculate starting index based on day of month
+  // This creates a rotating schedule that cycles through all cities
+  const cycleLength = Math.ceil(totalCities / CITIES_PER_DAY)
+  const cycleDay = (dayOfMonth - 1) % cycleLength
+  const startIndex = (cycleDay * CITIES_PER_DAY) % totalCities
+
+  // Get the cities to scrape today
+  const citiesToScrape = []
+  for (let i = 0; i < CITIES_PER_DAY; i++) {
+    const index = (startIndex + i) % totalCities
+    citiesToScrape.push(cities[index])
+  }
+
+  return citiesToScrape
 }
 
 function deduplicateActivities(activities: any[]) {

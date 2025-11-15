@@ -1,6 +1,10 @@
 import { OverpassActivity } from './overpass'
 
-export async function scrapeGooglePlaces(): Promise<OverpassActivity[]> {
+export async function scrapeGooglePlaces(
+  latitude: number = 43.6047,
+  longitude: number = 1.4442,
+  cityName: string = 'Toulouse'
+): Promise<OverpassActivity[]> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY
 
   if (!apiKey) {
@@ -8,18 +12,22 @@ export async function scrapeGooglePlaces(): Promise<OverpassActivity[]> {
     return []
   }
 
-  const categories = [
-    'dojo toulouse',
-    'club echecs toulouse',
-    'club football toulouse',
-    'club basket toulouse',
-    'club tennis toulouse',
-    'club rugby toulouse',
-    'salle escalade toulouse',
-    'club natation toulouse',
-    'club yoga toulouse',
-    'club danse toulouse',
+  // Generic sport categories (city-agnostic)
+  const sportTypes = [
+    'dojo',
+    'club echecs',
+    'club football',
+    'club basket',
+    'club tennis',
+    'club rugby',
+    'salle escalade',
+    'club natation',
+    'club yoga',
+    'club danse',
   ]
+
+  // Build queries with city name
+  const categories = sportTypes.map(sport => `${sport} ${cityName}`)
 
   const activities: OverpassActivity[] = []
 
@@ -50,7 +58,7 @@ export async function scrapeGooglePlaces(): Promise<OverpassActivity[]> {
           subcategory: category.split(' ')[1], // Extract sport type
           address: place.formatted_address || 'Adresse non spécifiée',
           postalCode: undefined,
-          city: 'Toulouse',
+          city: cityName,
           phone: undefined,
           email: undefined,
           website: undefined,
@@ -65,10 +73,10 @@ export async function scrapeGooglePlaces(): Promise<OverpassActivity[]> {
       await new Promise((resolve) => setTimeout(resolve, 500))
     }
 
-    console.log(`[Google Places] Scraped ${activities.length} activities`)
+    console.log(`[Google Places] Scraped ${activities.length} activities from ${cityName}`)
     return activities
   } catch (error) {
-    console.error('[Google Places] Scraping error:', error)
+    console.error(`[Google Places] Scraping error for ${cityName}:`, error)
     return []
   }
 }

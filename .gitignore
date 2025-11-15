@@ -41,4 +41,4 @@ prisma/*.db-journal
 
 # Documentation files
 /docs/**/*.*
-CLAUDE.md
+# CLAUDE.md

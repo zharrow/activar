@@ -1,0 +1,66 @@
+// Shadcn UI Component Overrides
+// Override default Shadcn styles with our design system
+
+.activity-card-shadcn {
+  border-radius: $border-radius-lg;
+  border-color: $color-border;
+  background: $color-white;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.3);
+    box-shadow: $shadow-lg;
+  }
+
+  // Customize card header
+  > div:first-child {
+    padding: $spacing-lg;
+  }
+
+  // Customize card content
+  > div:nth-child(2) {
+    padding: 0 $spacing-lg;
+  }
+
+  // Customize card footer
+  > div:last-child {
+    padding: $spacing-lg;
+    padding-top: $spacing-md;
+  }
+}
+
+// Button customizations to match our design
+button {
+  &[class*="btn"] {
+    border-radius: $border-radius-md;
+    font-weight: 600;
+    transition: all $transition-base;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Badge customizations
+[class*="badge"] {
+  border-radius: $border-radius-sm;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: $font-size-xs;
+}
+
+// Input customizations
+input[class*="input"] {
+  border-radius: $border-radius-md;
+  border-color: $color-border;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+  }
+}

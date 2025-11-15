@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getBlogPost, getAllBlogPosts } from '@/data/blog-posts'
 import { generateMetadata as genMeta, generateBreadcrumbJsonLd } from '@/lib/seo'
-import '@/styles/pages/blog-post.scss'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
+import { ArrowLeft, ArrowRight, Calendar, Clock, User, ChevronRight } from 'lucide-react'
 
 interface PageProps {
   params: { slug: string }
@@ -72,51 +75,125 @@ export default function BlogPostPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([breadcrumbJsonLd, articleJsonLd]) }}
       />
-      <main className="blog-post">
-        <article className="blog-post__article">
-          <div className="container container--narrow">
-            <nav className="blog-post__breadcrumb">
-              <Link href="/">Accueil</Link>
-              <span>/</span>
-              <Link href="/blog">Blog</Link>
-              <span>/</span>
-              <span>{post.title}</span>
+      <main className="bg-white">
+        {/* Breadcrumb Navigation */}
+        <div className="border-b border-neutral-200 bg-neutral-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <nav className="flex items-center gap-2 text-sm text-neutral-600">
+              <Link href="/" className="hover:text-primary-600 transition-colors">
+                Accueil
+              </Link>
+              <ChevronRight className="w-4 h-4" />
+              <Link href="/blog" className="hover:text-primary-600 transition-colors">
+                Blog
+              </Link>
+              <ChevronRight className="w-4 h-4" />
+              <span className="text-neutral-900 font-medium truncate">{post.title}</span>
             </nav>
+          </div>
+        </div>
 
-            <header className="blog-post__header">
-              <div className="blog-post__category">{post.category}</div>
-              <h1 className="blog-post__title">{post.title}</h1>
-              <div className="blog-post__meta">
-                <span className="blog-post__author">Par {post.author}</span>
-                <span className="blog-post__separator">•</span>
-                <time className="blog-post__date">
+        {/* Article */}
+        <article className="py-12 sm:py-16">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
+            <header className="mb-12">
+              {/* Category Badge */}
+              <Badge
+                className={post.category === 'Sport'
+                  ? 'bg-primary-100 text-primary-700 border-primary-200 mb-6'
+                  : 'bg-accent-100 text-accent-700 border-accent-200 mb-6'
+                }
+              >
+                {post.category}
+              </Badge>
+
+              {/* Title */}
+              <h1 className="text-4xl sm:text-5xl font-bold text-neutral-900 mb-6 leading-tight">
+                {post.title}
+              </h1>
+
+              {/* Meta Information */}
+              <div className="flex flex-wrap items-center gap-4 text-neutral-600">
+                {/* Author */}
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
+                    <User className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-neutral-900">
+                      {post.author}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="text-neutral-300">•</span>
+
+                {/* Date */}
+                <time className="flex items-center gap-1.5 text-sm">
+                  <Calendar className="w-4 h-4" />
                   {new Date(post.publishedAt).toLocaleDateString('fr-FR', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'
                   })}
                 </time>
-                <span className="blog-post__separator">•</span>
-                <span className="blog-post__read-time">{post.readTime} de lecture</span>
+
+                <span className="text-neutral-300">•</span>
+
+                {/* Read Time */}
+                <span className="flex items-center gap-1.5 text-sm">
+                  <Clock className="w-4 h-4" />
+                  {post.readTime}
+                </span>
               </div>
             </header>
 
+            {/* Content */}
             <div
-              className="blog-post__content"
+              className="prose prose-lg prose-neutral max-w-none
+                prose-headings:text-neutral-900 prose-headings:font-bold
+                prose-p:text-neutral-700 prose-p:leading-relaxed
+                prose-a:text-primary-600 prose-a:no-underline hover:prose-a:text-primary-700
+                prose-strong:text-neutral-900 prose-strong:font-semibold
+                prose-ul:text-neutral-700 prose-ol:text-neutral-700
+                prose-li:my-2
+                mb-12"
               dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }}
             />
 
-            <footer className="blog-post__footer">
-              <Link href="/blog" className="btn btn--secondary">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                Retour au blog
-              </Link>
-              <Link href="/activites" className="btn btn--primary">
-                Découvrir les activités
-              </Link>
-            </footer>
+            {/* Action Cards */}
+            <div className="grid md:grid-cols-2 gap-6 pt-12 border-t border-neutral-200">
+              {/* Back to Blog */}
+              <Card className="border-neutral-200 hover:border-primary-300 transition-colors">
+                <Link href="/blog" className="block p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-lg bg-neutral-100 flex items-center justify-center">
+                      <ArrowLeft className="w-5 h-5 text-neutral-700" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-neutral-900 mb-1">Retour au blog</p>
+                      <p className="text-sm text-neutral-600">Découvrez plus d&apos;articles</p>
+                    </div>
+                  </div>
+                </Link>
+              </Card>
+
+              {/* Discover Activities */}
+              <Card className="border-primary-200 bg-gradient-to-br from-primary-50 to-white hover:border-primary-300 transition-colors">
+                <Link href="/activites" className="block p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                      <ArrowRight className="w-5 h-5 text-primary-700" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-neutral-900 mb-1">Découvrir les activités</p>
+                      <p className="text-sm text-neutral-600">Trouvez votre activité idéale</p>
+                    </div>
+                  </div>
+                </Link>
+              </Card>
+            </div>
           </div>
         </article>
       </main>

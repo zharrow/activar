@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import FAQ from '@/components/FAQ'
-import '@/styles/pages/faq.scss'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { HelpCircle, ArrowRight, BookOpen, Sparkles } from 'lucide-react'
 
 export const metadata: Metadata = genMeta({
   title: 'FAQ - Questions fréquentes | ActivityAround',
@@ -73,32 +80,107 @@ export default function FAQPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageJsonLd) }}
       />
-      <main className="faq-page">
-        <section className="faq-hero">
-          <div className="container">
-            <h1 className="faq-hero__title">Questions fréquentes</h1>
-            <p className="faq-hero__subtitle">
+      <main className="bg-white">
+        {/* Hero Section - Modern gradient */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 border-b border-neutral-200">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100 rounded-full opacity-20 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-100 rounded-full opacity-20 blur-3xl" />
+
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6">
+              <HelpCircle className="w-4 h-4" />
+              {faqItems.length} questions fréquentes
+            </div>
+
+            {/* Title */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
+              Questions fréquentes
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-lg sm:text-xl text-neutral-600 leading-relaxed max-w-2xl mx-auto">
               Tout ce que vous devez savoir sur ActivityAround
             </p>
           </div>
         </section>
 
-        <section className="faq-content">
-          <div className="container">
-            <FAQ items={faqItems} />
+        {/* FAQ Content */}
+        <section className="py-16 sm:py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* FAQ Accordion */}
+            <Card className="border-neutral-200 shadow-sm mb-16">
+              <Accordion type="single" collapsible className="divide-y divide-neutral-200">
+                {faqItems.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`item-${index}`}
+                    className="border-none px-6 sm:px-8"
+                  >
+                    <AccordionTrigger className="text-left hover:no-underline py-6 text-lg font-semibold text-neutral-900 hover:text-primary-600 transition-colors">
+                      {item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-base text-neutral-700 leading-relaxed pb-6">
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </Card>
 
-            <div className="faq-cta">
-              <h2 className="faq-cta__title">Vous n&apos;avez pas trouvé de réponse ?</h2>
-              <p className="faq-cta__text">
-                Explorez notre catalogue d&apos;activités ou consultez notre blog pour plus d&apos;informations
-              </p>
-              <div className="faq-cta__buttons">
-                <Link href="/activites" className="btn btn--primary">
-                  Découvrir les activités
-                </Link>
-                <Link href="/blog" className="btn btn--secondary">
-                  Lire le blog
-                </Link>
+            {/* CTA Cards */}
+            <div className="space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 text-center mb-8">
+                Vous n&apos;avez pas trouvé de réponse ?
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Activities CTA */}
+                <Card className="border-2 border-primary-200 bg-gradient-to-br from-primary-50 to-white hover:border-primary-300 transition-colors group">
+                  <Link href="/activites" className="block p-8">
+                    <div className="flex flex-col items-center text-center space-y-4">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                        <Sparkles className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-neutral-900 mb-2">
+                          Découvrir les activités
+                        </h3>
+                        <p className="text-neutral-600 mb-4">
+                          Explorez notre catalogue de 500+ activités à Toulouse
+                        </p>
+                        <Button className="bg-primary-600 hover:bg-primary-700">
+                          Explorer
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </div>
+                    </div>
+                  </Link>
+                </Card>
+
+                {/* Blog CTA */}
+                <Card className="border-2 border-accent-200 bg-gradient-to-br from-accent-50 to-white hover:border-accent-300 transition-colors group">
+                  <Link href="/blog" className="block p-8">
+                    <div className="flex flex-col items-center text-center space-y-4">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                        <BookOpen className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-neutral-900 mb-2">
+                          Lire le blog
+                        </h3>
+                        <p className="text-neutral-600 mb-4">
+                          Guides et conseils pour choisir votre activité
+                        </p>
+                        <Button variant="outline" className="border-accent-300 text-accent-700 hover:bg-accent-50">
+                          Consulter
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </div>
+                    </div>
+                  </Link>
+                </Card>
               </div>
             </div>
           </div>

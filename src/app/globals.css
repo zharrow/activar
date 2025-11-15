@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   ActivityAround Design System - Notion-inspired 2025
+   ======================================== */
+
+@layer base {
+  :root {
+    /* ===== Shadcn/ui Base Colors (HSL format) ===== */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;  /* #171717 - neutral-900 */
+
+    /* Card colors */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    /* Popover colors */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    /* Primary (Indigo) */
+    --primary: 239 84% 67%;  /* #6366F1 - Indigo-500 */
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary (Neutral) */
+    --secondary: 0 0% 96%;  /* #F5F5F5 - neutral-100 */
+    --secondary-foreground: 0 0% 9%;
+
+    /* Muted */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;  /* #737373 - neutral-500 */
+
+    /* Accent (Cyan) */
+    --accent: 187 92% 69%;  /* #22D3EE - cyan-400 */
+    --accent-foreground: 0 0% 9%;
+
+    /* Destructive (Error/Rose) */
+    --destructive: 350 89% 60%;  /* #F43F5E - rose-500 */
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 0 0% 90%;  /* #E5E5E5 - neutral-200 */
+    --input: 0 0% 90%;
+    --ring: 239 84% 67%;  /* Same as primary */
+
+    /* Border radius */
+    --radius: 0.5rem;  /* 8px */
+
+    /* ===== Custom Design Tokens ===== */
+
+    /* Typography */
+    --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: "Cal Sans", "Inter", sans-serif;
+
+    /* Shadows (Notion-style subtle) */
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --shadow-card-hover: 0 8px 30px rgb(0 0 0 / 0.12);
+
+    /* Animations */
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    /* Dark mode colors (future enhancement) */
+    --background: 0 0% 9%;  /* #171717 */
+    --foreground: 0 0% 98%;
+    --card: 0 0% 14%;  /* #262626 - neutral-800 */
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 239 84% 67%;  /* Keep same indigo */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 187 92% 69%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 350 89% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 25%;  /* #404040 - neutral-700 */
+    --input: 0 0% 25%;
+    --ring: 239 84% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+}
+
+/* ===== Custom Utilities ===== */
+
+@layer utilities {
+  /* Text gradient utilities */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+  }
+
+  .text-gradient-primary {
+    @apply text-gradient from-primary-600 to-accent-500;
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-neutral-900/80 backdrop-blur-md border border-neutral-700/50;
+  }
+
+  /* Card hover effect (Notion-style) */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  /* Subtle animations */
+  .animate-fade-in {
+    animation: fadeIn var(--duration-normal) var(--ease-soft);
+  }
+
+  .animate-slide-up {
+    animation: slideUp var(--duration-normal) var(--ease-soft);
+  }
+
+  .animate-scale-in {
+    animation: scaleIn var(--duration-fast) var(--ease-spring);
+  }
+}
+
+/* ===== Keyframe Animations ===== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
